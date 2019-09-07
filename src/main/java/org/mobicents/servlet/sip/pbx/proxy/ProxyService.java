@@ -58,7 +58,7 @@ public class ProxyService {
 		try {
 			String aor = URIUtil.toCanonical(request.getRequestURI());
 			
-			logger.debug("Initial request (" + request.getMethod() + ") for AOR: " + aor);
+			logger.info("Initial request (" + request.getMethod() + ") for AOR: " + aor);
 			locationService.beginTransaction();
 			
 			List<Binding> bindings = locationService.getBindings(aor);
@@ -67,12 +67,12 @@ public class ProxyService {
 				Binding binding = (Binding) bindings.get(0);
 				URI target = sipFactory.createURI(binding.getContact());
 				
-				logger.debug("Proxying request to: " + target);
+				logger.info("Proxying request to: " + target);
 				Proxy proxy = request.getProxy();
 				proxy.setRecordRoute(true);
 				proxy.proxyTo(target);
 			} else {
-				logger.debug("No binding found for AOR: " + aor);
+				logger.info("No binding found for AOR: " + aor);
 				request.createResponse(SipServletResponse.SC_NOT_FOUND).send();
 			}
 		} catch (Exception e) {

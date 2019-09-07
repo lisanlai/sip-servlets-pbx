@@ -85,7 +85,7 @@ public class RegistrarService {
 			
 			String aor = URIUtil.toCanonical(request.getTo().getURI());
 			
-			logger.debug("Handling register for aor: " + aor);
+			logger.info("Handling register for aor: " + aor);
 			
 			List<Binding> bindings = locationService.getBindings(aor);
 			if (bindings == null) {
@@ -155,14 +155,14 @@ public class RegistrarService {
 								}
 								if (expires == 0) {
 									locationService.removeBinding(binding);
-									logger.debug("Removed binding: " + binding);
+									logger.info("Removed binding: " + binding);
 								} else {
 									binding.setContact(contact.getURI().toString());
 									binding.setCallId(callId);
 									binding.setCseq(cseq);
 									binding.setExpires(expires);
 									locationService.updateBinding(binding);		
-									logger.debug("Updated binding: " + binding);
+									logger.info("Updated binding: " + binding);
 								}
 							}
 						}
@@ -172,7 +172,7 @@ public class RegistrarService {
 							binding.setCseq(cseq);
 							binding.setExpires(expires);
 							locationService.addBinding(binding);
-							logger.debug("Added binding: " + binding);
+							logger.info("Added binding: " + binding);
 						}
 					}
 				}

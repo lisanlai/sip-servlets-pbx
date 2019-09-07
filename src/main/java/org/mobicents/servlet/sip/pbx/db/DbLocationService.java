@@ -36,12 +36,14 @@ public class DbLocationService implements LocationService {
 	public DbLocationService() {
 	}
 	
+	@Override
 	public void start() throws Exception {
 		HibernateUtil.getSessionFactory();
 		timer = new Timer();
 		timer.schedule(new Scavenger(), 5000, 5000);
 	}
-	
+
+	@Override
 	public void stop() throws Exception {
 		timer.cancel();
 		HibernateUtil.getSessionFactory().close();
@@ -50,7 +52,8 @@ public class DbLocationService implements LocationService {
 	private Session getSession() {
 		return HibernateUtil.getSessionFactory().getCurrentSession();
 	}
-	
+
+	@Override
 	public Binding createBinding(String aor, String contact) {
 		return new Binding(aor, contact);
 	}
